@@ -12,4 +12,9 @@ export default defineConfig([
   tseslint.configs.recommended,
   eslintConfigPrettier,
   { files: ["**/*.json"], plugins: { json }, language: "json/json" },
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ]);

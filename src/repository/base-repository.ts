@@ -3,16 +3,14 @@ import { Pool } from "pg";
 export interface WhereConditions {
   [key: string]: any;
 }
-
 export interface CreateData {
   [key: string]: any;
 }
-
 export interface UpdateData {
   [key: string]: any;
 }
 
-export abstract class BaseRepository<T = any> {
+export abstract class BaseRepository {
   protected tableName: string;
 
   protected constructor(
@@ -22,14 +20,18 @@ export abstract class BaseRepository<T = any> {
     this.tableName = tableName;
   }
 
-  async findAll(): Promise<T[]> {
+  // Notice <T = any> is now on the method
+  async findAll<T = any>(): Promise<T[]> {
     const result = await this.connection.query(
       `SELECT * FROM ${this.tableName}`,
     );
     return result.rows;
   }
 
-  async findById(id: any, idColumn: string = "id"): Promise<T | null> {
+  async findById<T = any>(
+    id: string | number,
+    idColumn: string = "id",
+  ): Promise<T | null> {
     const result = await this.connection.query(
       `SELECT * FROM ${this.tableName} WHERE ${idColumn} = $1`,
       [id],
@@ -37,7 +39,7 @@ export abstract class BaseRepository<T = any> {
     return result.rows[0] || null;
   }
 
-  async findOne(conditions: WhereConditions): Promise<T | null> {
+  async findOne<T = any>(conditions: WhereConditions): Promise<T | null> {
     const { query, values } = this._buildWhereClause(conditions);
     const result = await this.connection.query(
       `SELECT * FROM ${this.tableName} ${query} LIMIT 1`,
@@ -46,7 +48,7 @@ export abstract class BaseRepository<T = any> {
     return result.rows[0] || null;
   }
 
-  async findMany(conditions: WhereConditions = {}): Promise<T[]> {
+  async findMany<T = any>(conditions: WhereConditions = {}): Promise<T[]> {
     const { query, values } = this._buildWhereClause(conditions);
     const result = await this.connection.query(
       `SELECT * FROM ${this.tableName} ${query}`,
@@ -55,7 +57,7 @@ export abstract class BaseRepository<T = any> {
     return result.rows;
   }
 
-  async create(data: CreateData): Promise<T> {
+  async create<T = any>(data: CreateData): Promise<T> {
     const columns = Object.keys(data);
     const values = Object.values(data);
     const placeholders = values.map((_, i) => `$${i + 1}`).join(", ");
@@ -68,7 +70,7 @@ export abstract class BaseRepository<T = any> {
     return result.rows[0];
   }
 
-  async update(
+  async update<T = any>(
     id: any,
     data: UpdateData,
     idColumn: string = "id",
@@ -84,7 +86,7 @@ export abstract class BaseRepository<T = any> {
     return result.rows[0] || null;
   }
 
-  async delete(id: any, idColumn: string = "id"): Promise<T | null> {
+  async delete<T = any>(id: any, idColumn: string = "id"): Promise<T | null> {
     const result = await this.connection.query(
       `DELETE FROM ${this.tableName} WHERE ${idColumn} = $1 RETURNING *`,
       [id],
@@ -92,6 +94,7 @@ export abstract class BaseRepository<T = any> {
     return result.rows[0] || null;
   }
 
+  // Count and Exists don't usually need T as they return number/boolean
   async count(conditions: WhereConditions = {}): Promise<number> {
     const { query, values } = this._buildWhereClause(conditions);
     const result = await this.connection.query(
