@@ -9,13 +9,16 @@
     "@types/pg": "^8.16.0",
     "eslint": "^9.39.2",
     "globals": "^17.0.0",
+    "jest": "^30.2.0",
     "prettier": "3.8.0",
+    "ts-jest": "^29.4.6",
     "typescript-eslint": "^8.53.0"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "@jest/globals": "^30.2.0",
     "dotenv": "^17.2.3",
     "pg": "^8.17.1"
   }
