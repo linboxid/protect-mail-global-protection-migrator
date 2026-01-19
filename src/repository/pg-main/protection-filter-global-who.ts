@@ -1,13 +1,13 @@
-import { pgMainConn } from "@/db/pg-main-conn.ts";
-import { BaseRepository } from "@/repository/base-repository.ts";
 import {
   PROTECTION_ACTION_TYPE_ENUM,
   PROTECTION_DIRECTION_ENUM,
-  type PROTECTION_WHAT_TYPE_ENUM,
+  type PROTECTION_WHO_TYPE_ENUM,
 } from "@/constants.ts";
+import { BaseRepository } from "@/repository/base-repository.ts";
+import { pgMainConn } from "@/db/pg-main-conn.ts";
 
 export interface AddOneParams {
-  type: PROTECTION_WHAT_TYPE_ENUM;
+  type: PROTECTION_WHO_TYPE_ENUM;
   value: string;
   direction: PROTECTION_DIRECTION_ENUM;
   action_type: PROTECTION_ACTION_TYPE_ENUM;
@@ -16,9 +16,9 @@ export interface AddOneParams {
   proxmox_id: number;
 }
 
-export class ProtectionFilterGlobalWhatRepository extends BaseRepository {
+export class ProtectionFilterGlobalWhoRepository extends BaseRepository {
   constructor() {
-    super(pgMainConn, "protection_filter_global_what");
+    super(pgMainConn, "protection_filter_global_who");
   }
 
   async addOne({
