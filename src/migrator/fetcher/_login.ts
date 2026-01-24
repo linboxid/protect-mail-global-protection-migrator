@@ -2,8 +2,7 @@ import { type ServerServerNode } from "@/repository/pg-app";
 import { CacheModel } from "@/repository/redis";
 import { CACHE_KEY_ENUM } from "@/constants.ts";
 import axios from "axios";
-import { buildProxmoxUrl } from "@/migrator/util/build-proxmox-url.ts";
-import { fetcherAgent } from "@/migrator/util/fetcher-agent.ts";
+import { fetcherAgent, buildProxmoxUrl } from "@/migrator/util";
 
 type ProxmoxLoginResponse = {
   data: {
@@ -25,13 +24,13 @@ type CredentialCache = {
 };
 
 type Params = {
-  serverNode: ServerServerNode;
+  masterServer: ServerServerNode;
 };
 
 const EXPIRE_CREDENTIAL_PROXMOX = 10 * 60; // 10 Minutes in Second
 
-export const _login = async ({ serverNode }: Params): Promise<ReturnType> => {
-  if (serverNode.type !== "master") {
+export const _login = async ({ masterServer }: Params): Promise<ReturnType> => {
+  if (masterServer.type !== "master") {
     throw new Error("Please pass a master server in serverNode");
   }
 
@@ -48,11 +47,11 @@ export const _login = async ({ serverNode }: Params): Promise<ReturnType> => {
   const response = await axios.post<ProxmoxLoginResponse>(
     buildProxmoxUrl({
       path: "/access/ticket",
-      masterServerUrl: serverNode.url,
+      masterServerUrl: masterServer.url,
     }),
     {
-      username: serverNode.auth_username,
-      password: serverNode.auth_password,
+      username: masterServer.auth_username,
+      password: masterServer.auth_password,
       realm: "pmg",
     },
     {

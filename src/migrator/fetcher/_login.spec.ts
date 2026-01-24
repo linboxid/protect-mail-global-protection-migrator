@@ -12,7 +12,7 @@ describe("Login", () => {
     }
 
     const result = await _login({
-      serverNode: masterServer,
+      masterServer: masterServer,
     });
 
     expect(result).toBeDefined();
