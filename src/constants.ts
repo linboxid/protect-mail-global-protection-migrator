@@ -3,10 +3,12 @@ import "dotenv/config";
 export const POSTGRES_USERNAME = process.env.POSTGRES_USERNAME;
 export const POSTGRES_HOST = process.env.POSTGRES_HOST;
 export const POSTGRES_PORT = process.env.POSTGRES_PORT;
-export const POSTGRES_PASSWORD = process.env.POSTGRES_USERNAME;
+export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
 
 export const REDIS_HOST = process.env.REDIS_HOST;
 export const REDIS_PORT = process.env.REDIS_PORT;
+
+export const APP_NAME = "protection-global-migrator";
 
 export enum PROTECTION_WHAT_TYPE_ENUM {
   CONTENT_TYPE_FILTER = "content_type_filter",
@@ -18,7 +20,7 @@ export enum PROTECTION_WHAT_TYPE_ENUM {
 }
 
 export enum CACHE_KEY_ENUM {
-  PROXMOX_CREDENTIAL = "proxmox_credential",
+  PROXMOX_CREDENTIAL = `${APP_NAME}-proxmox-credential`,
 }
 
 export enum PROTECTION_WHO_TYPE_ENUM {

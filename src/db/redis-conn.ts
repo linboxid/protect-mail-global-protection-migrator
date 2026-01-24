@@ -22,5 +22,6 @@ export async function initRedis(): Promise<void> {
     await redisClient.connect();
   }
 }
+initRedis();
 
 export default redisClient;

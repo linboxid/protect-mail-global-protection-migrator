@@ -1,4 +1,4 @@
-import { ServerRepository } from "@/repository/pg-app";
+import { type ServerServerNode } from "@/repository/pg-app";
 import { CacheModel } from "@/repository/redis";
 import { CACHE_KEY_ENUM } from "@/constants.ts";
 import axios from "axios";
@@ -24,15 +24,18 @@ type CredentialCache = {
   ticket: string;
 };
 
-export const _login = async (): Promise<ReturnType> => {
-  const serverRepository = new ServerRepository();
-  const cacheModel = new CacheModel();
+type Params = {
+  serverNode: ServerServerNode;
+};
 
-  const masterServer = await serverRepository.getMaster();
+const EXPIRE_CREDENTIAL_PROXMOX = 10 * 60; // 10 Minutes in Second
 
-  if (!masterServer) {
-    throw new Error("Master does not exist");
+export const _login = async ({ serverNode }: Params): Promise<ReturnType> => {
+  if (serverNode.type !== "master") {
+    throw new Error("Please pass a master server in serverNode");
   }
+
+  const cacheModel = new CacheModel();
 
   const credentialCache = await cacheModel.get<CredentialCache>(
     CACHE_KEY_ENUM.PROXMOX_CREDENTIAL,
@@ -45,11 +48,12 @@ export const _login = async (): Promise<ReturnType> => {
   const response = await axios.post<ProxmoxLoginResponse>(
     buildProxmoxUrl({
       path: "/access/ticket",
-      masterServerUrl: masterServer.url,
+      masterServerUrl: serverNode.url,
     }),
     {
-      username: masterServer.auth_username,
-      password: masterServer.auth_password,
+      username: serverNode.auth_username,
+      password: serverNode.auth_password,
+      realm: "pmg",
     },
     {
       headers: {
@@ -70,9 +74,13 @@ export const _login = async (): Promise<ReturnType> => {
   const csrfToken = data.data.CSRFPreventionToken;
   const ticket = data.data.ticket;
 
-  await cacheModel.set<CredentialCache>(CACHE_KEY_ENUM.PROXMOX_CREDENTIAL, {
-    csrfToken,
-    ticket,
+  await cacheModel.set<CredentialCache>({
+    key: CACHE_KEY_ENUM.PROXMOX_CREDENTIAL,
+    ttlSeconds: EXPIRE_CREDENTIAL_PROXMOX,
+    value: {
+      csrfToken,
+      ticket,
+    },
   });
 
   return {
