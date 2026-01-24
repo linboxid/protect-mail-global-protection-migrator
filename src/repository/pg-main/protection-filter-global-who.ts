@@ -3,10 +3,10 @@ import {
   PROTECTION_DIRECTION_ENUM,
   type PROTECTION_WHO_TYPE_ENUM,
 } from "@/constants.ts";
-import { BaseRepository } from "@/repository/base-repository.ts";
-import { pgMainConn } from "@/db/pg-main-conn.ts";
+import { BasePgRepository } from "@/repository/base-pg-repository.ts";
+import { pgMainConn } from "@/db";
 
-export interface AddOneParams {
+export interface ProtectionFilterGlobalWhoParams {
   type: PROTECTION_WHO_TYPE_ENUM;
   value: string;
   direction: PROTECTION_DIRECTION_ENUM;
@@ -16,7 +16,7 @@ export interface AddOneParams {
   proxmox_id: number;
 }
 
-export class ProtectionFilterGlobalWhoRepository extends BaseRepository {
+export class ProtectionFilterGlobalWhoRepository extends BasePgRepository {
   constructor() {
     super(pgMainConn, "protection_filter_global_who");
   }
@@ -29,7 +29,7 @@ export class ProtectionFilterGlobalWhoRepository extends BaseRepository {
     created_at,
     updated_at,
     proxmox_id,
-  }: AddOneParams) {
+  }: ProtectionFilterGlobalWhoParams) {
     return this.create({
       type,
       value,

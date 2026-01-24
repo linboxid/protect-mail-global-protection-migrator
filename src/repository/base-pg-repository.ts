@@ -10,7 +10,7 @@ export interface UpdateData {
   [key: string]: any;
 }
 
-export abstract class BaseRepository {
+export abstract class BasePgRepository {
   protected tableName: string;
 
   protected constructor(

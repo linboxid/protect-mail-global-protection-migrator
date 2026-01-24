@@ -1,12 +1,12 @@
-import { pgMainConn } from "@/db/pg-main-conn.ts";
-import { BaseRepository } from "@/repository/base-repository.ts";
+import { pgMainConn } from "@/db";
+import { BasePgRepository } from "@/repository/base-pg-repository.ts";
 import {
   PROTECTION_ACTION_TYPE_ENUM,
   PROTECTION_DIRECTION_ENUM,
   type PROTECTION_WHAT_TYPE_ENUM,
 } from "@/constants.ts";
 
-export interface AddOneParams {
+export interface ProtectionFilterGlobalWhatParams {
   type: PROTECTION_WHAT_TYPE_ENUM;
   value: string;
   direction: PROTECTION_DIRECTION_ENUM;
@@ -16,7 +16,7 @@ export interface AddOneParams {
   proxmox_id: number;
 }
 
-export class ProtectionFilterGlobalWhatRepository extends BaseRepository {
+export class ProtectionFilterGlobalWhatRepository extends BasePgRepository {
   constructor() {
     super(pgMainConn, "protection_filter_global_what");
   }
@@ -29,7 +29,7 @@ export class ProtectionFilterGlobalWhatRepository extends BaseRepository {
     created_at,
     updated_at,
     proxmox_id,
-  }: AddOneParams) {
+  }: ProtectionFilterGlobalWhatParams) {
     return this.create({
       type,
       value,

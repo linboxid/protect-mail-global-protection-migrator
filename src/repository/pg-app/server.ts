@@ -1,7 +1,7 @@
-import { BaseRepository } from "@/repository/base-repository.ts";
-import { pgAppConn } from "@/db/pg-app-conn.ts";
+import { BasePgRepository } from "@/repository/base-pg-repository.ts";
+import { pgAppConn } from "@/db";
 
-export interface ServerNode {
+export interface ServerServerNode {
   uuid: string;
   name: string;
   status: "online" | "offline" | string; // Using a union if there are specific states
@@ -14,13 +14,13 @@ export interface ServerNode {
   updated_at: string;
 }
 
-export class ServerRepository extends BaseRepository {
+export class ServerRepository extends BasePgRepository {
   constructor() {
     super(pgAppConn, "server");
   }
 
   async getMaster() {
-    return await this.findOne<ServerNode>({
+    return await this.findOne<ServerServerNode>({
       type: "master",
     });
   }

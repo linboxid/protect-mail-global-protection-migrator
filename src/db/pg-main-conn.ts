@@ -1,10 +1,15 @@
-import "dotenv/config";
 import { Pool } from "pg";
+import {
+  POSTGRES_HOST,
+  POSTGRES_PASSWORD,
+  POSTGRES_PORT,
+  POSTGRES_USERNAME,
+} from "@/constants.ts";
 
 export const pgMainConn = new Pool({
-  user: process.env.POSTGRES_USERNAME,
-  host: process.env.POSTGRES_HOST,
+  user: POSTGRES_USERNAME,
+  host: POSTGRES_HOST,
   database: "main",
-  password: process.env.POSTGRES_PASSWORD,
-  port: parseInt(process.env.POSTGRES_PORT || "5432"),
+  password: POSTGRES_PASSWORD,
+  port: parseInt(POSTGRES_PORT || "5432"),
 });
