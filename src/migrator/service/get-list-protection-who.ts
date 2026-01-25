@@ -1,21 +1,18 @@
-import { fetcher } from "@/migrator/fetcher/fetcher.ts";
+import { fetcher } from "@/migrator/fetcher";
 
 export interface GetListProtectionWhoParams {
   whoContainerId: number; // Container Id in Proxmox -> Incoming - Global Blacklist
 }
 
 type ResponseData = {
+  id: number;
+  descr: string;
   otype_text:
     | "Regular Expression"
     | "Domain"
     | "Mail address"
     | "IP Address"
     | "IP Network";
-  descr: string;
-  id: number;
-  ogroup: number;
-  otype: number;
-  receivertest: number;
 };
 
 export interface GetListProtectionWhoResponse {
