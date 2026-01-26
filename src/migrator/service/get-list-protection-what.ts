@@ -1,6 +1,6 @@
 import { fetcher } from "@/migrator/fetcher";
 
-export interface GetListProtectionWhoParams {
+export interface GetListProtectionWhatParams {
   whatContainerId: number; // Container Id in Proxmox -> Incoming - Global Blacklist
 }
 
@@ -25,7 +25,7 @@ export interface GetListProtectionWhatResponse {
  */
 export const getListProtectionWhat = async ({
   whatContainerId,
-}: GetListProtectionWhoParams) => {
+}: GetListProtectionWhatParams) => {
   const response = await fetcher<GetListProtectionWhatResponse>({
     endpoint: `/config/ruledb/what/${whatContainerId}/objects`,
     options: {
