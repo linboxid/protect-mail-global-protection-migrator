@@ -15,8 +15,8 @@ export enum PROTECTION_WHAT_TYPE_ENUM {
   MATCH_FILENAME = "match_filename",
   ARCHIVE_FILTER = "archive_filter",
   MATCH_ARCHIVE_FILENAME = "match_archive_filename",
-  SUBJECT_MATCH = "subject_match",
-  SUBJECT_CONTAIN = "subject_contain",
+  MATCH_FIELD = "match_field",
+  OTHER="OTHER",
 }
 
 export enum CACHE_KEY_ENUM {

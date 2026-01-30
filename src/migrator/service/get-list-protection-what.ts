@@ -16,7 +16,7 @@ type ResponseData = {
 };
 
 export interface GetListProtectionWhatResponse {
-  data: ResponseData;
+  data: ResponseData[];
 }
 
 /**
