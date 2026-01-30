@@ -16,7 +16,7 @@ export enum PROTECTION_WHAT_TYPE_ENUM {
   ARCHIVE_FILTER = "archive_filter",
   MATCH_ARCHIVE_FILENAME = "match_archive_filename",
   MATCH_FIELD = "match_field",
-  OTHER="OTHER",
+  OTHER="other",
 }
 
 export enum CACHE_KEY_ENUM {
@@ -30,6 +30,7 @@ export enum PROTECTION_WHO_TYPE_ENUM {
   NETWORK = "network",
   REGEX = "regex",
   DOMAIN_WILDCARD = "domain_wildcard",
+  OTHER = "other",
 }
 
 export enum PROTECTION_ACTION_TYPE_ENUM {
