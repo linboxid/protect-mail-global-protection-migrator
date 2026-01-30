@@ -1,7 +1,7 @@
 import type { GetListProtectionWhoResponse } from "@/migrator/service";
 import { PROTECTION_WHO_TYPE_ENUM } from "@/constants.ts";
 import { _isDomainWildcard } from "@/migrator/core/protection-who/util/parse-who-object/_is-domain-wild-card.ts";
-import { _parseDomainFromRegex } from "@/migrator/core/protection-who/util/parse-who-object/parse-domain-wildcard-from-regex.ts";
+import { _parseDomainWildcardFromRegex } from "@/migrator/core/protection-who/util/parse-who-object/_parse-domain-wildcard-from-regex.ts";
 
 type ObjectItem = GetListProtectionWhoResponse["data"][0];
 
@@ -21,7 +21,7 @@ export function parseWhoOjbect({
     return {
       id: id,
       type: PROTECTION_WHO_TYPE_ENUM.DOMAIN_WILDCARD,
-      value: _parseDomainFromRegex(descr),
+      value: _parseDomainWildcardFromRegex(descr),
     };
   }
 

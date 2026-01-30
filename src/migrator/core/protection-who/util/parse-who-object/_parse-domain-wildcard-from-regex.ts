@@ -1,4 +1,4 @@
-export const _parseDomainFromRegex = (regexVal: string): string => {
+export const _parseDomainWildcardFromRegex = (regexVal: string): string => {
   const prefix = "^[^@]+@[^.]+\\.";
 
   // must start with the expected prefix
