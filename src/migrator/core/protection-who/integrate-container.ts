@@ -1,9 +1,9 @@
-import { getListProtectionWhat } from "@/migrator/service";
-import { integrateObjectItemToDb } from "@/migrator/core/protection-what/integrate-object-item-to-db.ts";
 import {
   PROTECTION_ACTION_TYPE_ENUM,
   type PROTECTION_DIRECTION_ENUM,
 } from "@/constants.ts";
+import { getListProtectionWho } from "@/migrator/service";
+import { integrateObjectItemToDb } from "@/migrator/core/protection-who/integrate-object-item-to-db.ts";
 
 interface Params {
   containerId: number; // For example, the ID of Incoming - Global Blacklist Container
@@ -20,8 +20,8 @@ export const integrateContainer = async ({
     `Integrating Cointainer - ID: ${containerId} - Direction: ${direction} - Action: ${actionType}`,
   );
 
-  const objectList = await getListProtectionWhat({
-    whatContainerId: containerId,
+  const objectList = await getListProtectionWho({
+    whoContainerId: containerId,
   });
 
   let totalAdded = 0;

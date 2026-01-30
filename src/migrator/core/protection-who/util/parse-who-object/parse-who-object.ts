@@ -16,7 +16,6 @@ export function parseWhoOjbect({
   otype_text,
   descr,
 }: ObjectItem): ParseWhoOjbect {
-  console.log(_isDomainWildcard(descr));
   if (_isDomainWildcard(descr)) {
     return {
       id: id,
