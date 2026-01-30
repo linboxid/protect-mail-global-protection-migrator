@@ -9,4 +9,12 @@ describe("Get List Protection What", () => {
 
     console.log(response.data);
   });
+
+  it("Should return empty list even when the container is not in server", async () => {
+    const response = await getListProtectionWhat({
+      whatContainerId: 999999999,
+    })
+
+    console.log(response)
+  });
 });
