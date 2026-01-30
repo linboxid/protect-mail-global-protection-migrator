@@ -16,11 +16,12 @@ export function parseWhoOjbect({
   otype_text,
   descr,
 }: ObjectItem): ParseWhoOjbect {
+  console.log(_isDomainWildcard(descr));
   if (_isDomainWildcard(descr)) {
     return {
       id: id,
       type: PROTECTION_WHO_TYPE_ENUM.DOMAIN_WILDCARD,
-      value: _parseDomainFromRegex(otype_text),
+      value: _parseDomainFromRegex(descr),
     };
   }
 

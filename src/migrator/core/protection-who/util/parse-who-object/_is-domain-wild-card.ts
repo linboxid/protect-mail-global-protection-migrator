@@ -1,6 +1,12 @@
 export const _isDomainWildcard = (regexVal: string): boolean => {
-  const startFormat = regexVal.startsWith("^[^@]+@[^.]+\\.");
+  const startWithEscaped = "^[^@]+@[^.]+\\.";
+  const startWithWithoutEscaped = "^[^@]+@[^.]+\.";
+
   const endFormat = regexVal.endsWith("$");
 
-  return startFormat && endFormat;
+  const startWithIsTrue =
+    regexVal.startsWith(startWithEscaped) ||
+    regexVal.startsWith(startWithWithoutEscaped);
+
+  return startWithIsTrue && endFormat;
 };
