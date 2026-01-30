@@ -21,7 +21,7 @@ export const integrateAllContainer = async () => {
   });
 
   const outgoingBlacklist = await integrateContainer({
-    containerId: PROXMOX.globalProtectionFilter.who.incomingBlacklist,
+    containerId: PROXMOX.globalProtectionFilter.who.outgoingBlacklist,
     direction: PROTECTION_DIRECTION_ENUM.OUT,
     actionType: PROTECTION_ACTION_TYPE_ENUM.BLACKLIST,
   });
